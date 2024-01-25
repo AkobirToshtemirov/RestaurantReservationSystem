@@ -205,13 +205,21 @@ public class Main {
                             int numberOfGuests = scanner.nextInt();
                             scanner.nextLine();
 
-                            reservationManager.createReservation(customerName, date, time, numberOfGuests, menu);
-                            System.out.println("Reservation created successfully.");
+                            // Create a new reservation
+                            Reservation newReservation = reservationManager.createReservation(customerName, date, time, numberOfGuests, menu);
+
+                            if (newReservation != null) {
+                                // Allow the customer to select meals for the reservation
+                                addMealChoicesToReservation(newReservation, scanner);
+
+                                System.out.println("Reservation created successfully.");
+                            }
                         } catch (InputMismatchException e) {
                             System.out.println("Invalid input. Please enter a valid integer for the number of guests.");
                             scanner.nextLine();
                         }
                         break;
+
 
                     case 3:
                         System.out.print("Enter reservation ID to view: ");
@@ -288,5 +296,17 @@ public class Main {
                 scanner.nextLine();
             }
         }
+    }
+
+    private static void addMealChoicesToReservation(Reservation reservation, Scanner scanner) {
+        System.out.println("Select meals for the reservation (enter 'done' when finished):");
+        String mealChoice;
+        do {
+            System.out.print("Enter meal name: ");
+            mealChoice = scanner.nextLine();
+            if (!mealChoice.equalsIgnoreCase("done")) {
+                reservation.addMeal(mealChoice);
+            }
+        } while (!mealChoice.equalsIgnoreCase("done"));
     }
 }

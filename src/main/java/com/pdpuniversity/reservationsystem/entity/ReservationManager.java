@@ -13,13 +13,15 @@ public class ReservationManager {
         this.reservations = new ArrayList<>();
     }
 
-    public void createReservation(String customerName, String date, String time, int numberOfGuests, Menu menu) {
+    public Reservation createReservation(String customerName, String date, String time, int numberOfGuests, Menu menu) {
         if (!isOverlappingReservation(date, time)) {
             Reservation reservation = new Reservation(customerName, date, time, numberOfGuests, menu);
             reservations.add(reservation);
             System.out.println("Reservation created successfully. ID: " + reservation.getId());
+            return reservation; // Return the created reservation
         } else {
             System.out.println("Overlapping reservation. Please choose a different date/time.");
+            return null; // Return null if reservation creation failed
         }
     }
 
