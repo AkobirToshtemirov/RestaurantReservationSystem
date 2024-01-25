@@ -5,14 +5,38 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code ReservationManager} class manages reservations, including creation, updating,
+ * deletion, and retrieval of reservations. It ensures that reservations do not overlap in time.
+ *
+ * @author Akobir Toshtemirov
+ * @version 1.0
+ * @since 2024-01-25
+ */
 @Getter
 public class ReservationManager {
+    /**
+     * A list to store all reservations managed by the ReservationManager.
+     */
     private List<Reservation> reservations;
 
+    /**
+     * Constructs a ReservationManager with an empty list of reservations.
+     */
     public ReservationManager() {
         this.reservations = new ArrayList<>();
     }
 
+    /**
+     * Creates a new reservation with the provided details and adds it to the list of reservations.
+     *
+     * @param customerName   The name of the customer making the reservation.
+     * @param date           The date of the reservation.
+     * @param time           The time of the reservation.
+     * @param numberOfGuests The number of guests for the reservation.
+     * @param menu           The menu associated with the reservation.
+     * @return The created reservation if successful, or null if overlapping with existing reservations.
+     */
     public Reservation createReservation(String customerName, String date, String time, int numberOfGuests, Menu menu) {
         if (!isOverlappingReservation(date, time)) {
             Reservation reservation = new Reservation(customerName, date, time, numberOfGuests, menu);
@@ -25,6 +49,13 @@ public class ReservationManager {
         }
     }
 
+    /**
+     * Checks if a new reservation overlaps with existing reservations based on date and time.
+     *
+     * @param date The date of the new reservation.
+     * @param time The time of the new reservation.
+     * @return {@code true} if there is an overlap, {@code false} otherwise.
+     */
     private boolean isOverlappingReservation(String date, String time) {
         for (Reservation existingReservation : reservations) {
             if (existingReservation.getDate().equals(date) && existingReservation.getTime().equals(time)) {
@@ -34,6 +65,14 @@ public class ReservationManager {
         return false;
     }
 
+    /**
+     * Updates an existing reservation with new date, time, and number of guests.
+     *
+     * @param reservationId     The ID of the reservation to be updated.
+     * @param newDate           The new date for the reservation.
+     * @param newTime           The new time for the reservation.
+     * @param newNumberOfGuests The new number of guests for the reservation.
+     */
     public void updateReservation(int reservationId, String newDate, String newTime, int newNumberOfGuests) {
         Reservation reservationToUpdate = getReservationById(reservationId);
         if (reservationToUpdate != null) {
@@ -50,6 +89,11 @@ public class ReservationManager {
         }
     }
 
+    /**
+     * Deletes a reservation with the specified ID.
+     *
+     * @param reservationId The ID of the reservation to be deleted.
+     */
     public void deleteReservation(int reservationId) {
         Reservation reservationToRemove = getReservationById(reservationId);
         if (reservationToRemove != null) {
@@ -60,6 +104,12 @@ public class ReservationManager {
         }
     }
 
+    /**
+     * Retrieves a reservation by its unique ID.
+     *
+     * @param reservationId The ID of the reservation to be retrieved.
+     * @return The reservation with the specified ID, or null if not found.
+     */
     public Reservation getReservationById(int reservationId) {
         for (Reservation reservation : reservations) {
             if (reservation.getId() == reservationId) {
@@ -69,10 +119,22 @@ public class ReservationManager {
         return null;
     }
 
+
+    /**
+     * Retrieves a list of all reservations managed by the ReservationManager.
+     *
+     * @return A list of all reservations.
+     */
     public List<Reservation> getAllReservations() {
         return reservations;
     }
 
+    /**
+     * Searches and retrieves reservations based on the customer's name.
+     *
+     * @param customerName The name of the customer for whom reservations are searched.
+     * @return A list of reservations matching the customer's name.
+     */
     public List<Reservation> searchReservationsByCustomerName(String customerName) {
         List<Reservation> result = new ArrayList<>();
         for (Reservation reservation : reservations) {
