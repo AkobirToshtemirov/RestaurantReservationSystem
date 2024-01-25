@@ -18,10 +18,10 @@ public class ReservationManager {
             Reservation reservation = new Reservation(customerName, date, time, numberOfGuests, menu);
             reservations.add(reservation);
             System.out.println("Reservation created successfully. ID: " + reservation.getId());
-            return reservation; // Return the created reservation
+            return reservation;
         } else {
             System.out.println("Overlapping reservation. Please choose a different date/time.");
-            return null; // Return null if reservation creation failed
+            return null;
         }
     }
 

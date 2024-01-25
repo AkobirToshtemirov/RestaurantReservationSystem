@@ -205,11 +205,9 @@ public class Main {
                             int numberOfGuests = scanner.nextInt();
                             scanner.nextLine();
 
-                            // Create a new reservation
                             Reservation newReservation = reservationManager.createReservation(customerName, date, time, numberOfGuests, menu);
 
                             if (newReservation != null) {
-                                // Allow the customer to select meals for the reservation
                                 addMealChoicesToReservation(newReservation, scanner);
 
                                 System.out.println("Reservation created successfully.");
